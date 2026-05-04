@@ -1061,6 +1061,9 @@ static int imx547_probe(struct i2c_client *client)
     }
     gpiod_set_value_cansleep(imx547->pipe_reset_gpio, 0);
 
+    /* wait for pipe reset to complete before I2C access*/
+    msleep(10);
+
     /* initialize controls */
     ret = v4l2_ctrl_handler_init(&imx547->ctrls.handler, 3);
     if (ret < 0) {
